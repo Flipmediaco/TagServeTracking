@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="flipmediaco" translate="label" sortOrder="999">
+			<label>Flipmedia</label>
+		</tab>
+		<section id="tagserve" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+			<label>tagserve</label>
+			<tab>flipmediaco</tab>
+			<resource>Flipmediaco_TagServeTracking::config_flipmediaco_tagservetracking</resource>
+			<group id="tagserve" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>TAG Serve</label>
+				<field id="mid" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Merchant ID</label>
+					<comment>Supplied by TAG as part of your account set up</comment>
+				</field>
+				<field id="pid" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Program ID</label>
+					<comment>Supplied by TAG as part of your account set up</comment>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

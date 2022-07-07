@@ -1,0 +1,30 @@
+{
+    "name": "flipmediaco/tagservetracking",
+    "description": "Implements Tag Serve Tracking as Module",
+    "version": "1.0.0",
+    "require": {
+        "php": ">=7.0",
+        "magento/framework": "*",
+        "magento/module-config": "*",
+        "magento/module-store": "*",
+        "magento/module-checkout": "*"
+    },
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Laurie Greysky",
+            "email": "laurie@flipmedia.co.uk"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Flipmediaco\\TagServeTracking\\": ""
+        }
+    }
+}
