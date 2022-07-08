@@ -1,7 +1,7 @@
 {
     "name": "flipmediaco/tagservetracking",
     "description": "Implements Tag Serve Tracking as Module",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "require": {
         "php": ">=7.0",
         "magento/framework": "*",
