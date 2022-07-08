@@ -71,7 +71,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getCurrency()
     {
-        return (int) $this->_scopeConfig->getValue('currency/options/base', $this->_storeScope);
+        return $this->_scopeConfig->getValue('currency/options/base', $this->_storeScope);
     }
 
     /**
