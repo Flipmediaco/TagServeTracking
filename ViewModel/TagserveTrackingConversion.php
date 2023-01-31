@@ -73,7 +73,7 @@ class TagserveTrackingConversion extends \Magento\Framework\DataObject implement
         $mid = $this->_helper->getMid();
         
         // Get pid
-        $pid = $this->_helper->getMid();
+        $pid = $this->_helper->getPid();
         
         // Get currency
         $currency = $this->_helper->getCurrency();
