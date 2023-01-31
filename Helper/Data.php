@@ -20,6 +20,16 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     protected $_scopeConfig;
 
     /**
+    * @var \Magento\Store\Model\StoreManagerInterface
+    */
+    protected $_storeManager;
+
+    /**
+    * @var \Magento\Directory\Model\Currency
+    */
+    protected $_currency;
+
+    /**
     * @var \Magento\Framework\Stdlib\CookieManagerInterface
     */
 	protected $_cookieManager;
@@ -33,10 +43,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Directory\Model\Currency $currency,
     	\Magento\Framework\Stdlib\CookieManagerInterface $cookieManager
     ) {
         $this->_storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
         $this->_scopeConfig = $scopeConfig;
+        $this->_storeManager = $storeManager;
+        $this->_currency = $currency;
         $this->_cookieManager = $cookieManager;
 
         parent::__construct($context);
@@ -71,11 +85,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getCurrency()
     {
-        return $this->_scopeConfig->getValue('currency/options/base', $this->_storeScope);
+        return (string) $this->_storeManager->getStore()->getCurrentCurrencyCode();
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getTagrid()
     {
