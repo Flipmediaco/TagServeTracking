@@ -65,6 +65,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * @return string
+     */
+    public function tagCategoryAttributeName()
+    {
+        return (string) 'tag_category_id';
+    }
+
+    /**
      * @return int
      */
     public function getMid()
@@ -93,6 +101,13 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getTagrid()
     {
-        return ((int) $this->_cookieManager->getCookie('tagrid')) ? (int) $this->_cookieManager->getCookie('tagrid') : '';
+        return ((int) $this->_cookieManager->getCookie('tagrid')) ? (int) $this->_cookieManager->getCookie('tagrid') : 0;
+    }
+
+    /**
+     * @return string
+     */
+    public function clearTagrid() {
+        return "<script>document.cookie = 'tagrid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';</script>";
     }
 }

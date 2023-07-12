@@ -20,15 +20,22 @@ class TagserveTrackingConversion extends \Magento\Framework\DataObject implement
 	protected $_order;
 
     /**
+    * @var \Magento\Catalog\Model\ProductFactory
+    */
+    protected $_productFactory;
+
+    /**
      * Conversion constructor.
      *
      */
     public function __construct(
         \Flipmediaco\TagServeTracking\Helper\Data $helper,
-        \Magento\Sales\Model\Order $order
+        \Magento\Sales\Model\Order $order,
+        \Magento\Catalog\Model\ProductFactory $productFactory
     ) {
         $this->_helper = $helper;
         $this->_order = $order;
+        $this->_productFactory = $productFactory;
         parent::__construct();
     }
 
@@ -49,25 +56,33 @@ class TagserveTrackingConversion extends \Magento\Framework\DataObject implement
     	// Load order from order_id
     	$order = $this->_order->loadByIncrementId( $order_id );
 
-        // If order id is false
-        if (!$order->getId()) return ""; 
+        // If order id is false or tagrid is false
+        if (!$order->getId() || !$this->_helper->getTagrid()) return ""; 
 
-    	// Set no_items
-    	$no_items = 0;
+    	// Set category_products
+    	$category_products = '';
         //
         // Get Items from Order
-        $items = $order->getAllVisibleItems();
+        $items = $order->getAllItems();
         // 
         if (is_array($items)) {
             foreach ($items as $item) {
-                $no_items = $no_items + $item->getQtyOrdered();
+                // If row has a value
+                if ($item->getRowTotalInclTax()) {
+                    // Get product tag category 
+                    $product = $this->_productFactory->create()->load($item->getProductId());
+                    $tag_cat = $product->getData($this->_helper->tagCategoryAttributeName());
+                    if (!$tag_cat) $tag_cat = 'CAT1';
+                    // 
+                    $category_products .=   'CAT=' . 
+                                            $tag_cat . ',' . 
+                                            $item->getQtyOrdered() . ',' . 
+                                            $item->getRowTotalInclTax() . '&';
+                }
             }
         }
-        // If no_items is false set to 1
-        if (!$no_items) $no_items = 1;
-
-        // Get order_amnt
-        $order_amnt = $order->getGrandTotal();
+        // If category_products is empty
+        if ($category_products == '') return ''; 
 
         // Get mid
         $mid = $this->_helper->getMid();
@@ -80,17 +95,18 @@ class TagserveTrackingConversion extends \Magento\Framework\DataObject implement
 
         // Get tagrid
         $tagrid = $this->_helper->getTagrid();
-        
+
         // Return Tracking pixel
         return	'<img src="https://www.tagserve.com/saleServlet?' . 
-        		'MID=' . $mid . '&' . 
-        		'PID=' . $pid . '&' . 
-        		'CRID=&' . 
-        		'ORDERID=' . $order_id . '&' . 
-        		'ORDERAMNT=' . $order_amnt . '&' . 
-        		'NUMOFITEMS=' . $no_items . '&' . 
-        		'CUR=' . $currency . '&' . 
-        		'RID=' . $tagrid . '" style="display: none;">';
+                'MID=' . $mid . '&' . 
+                'PID=' . $pid . '&' . 
+                'CRID=&' . 
+                'ORDERID=' . $order_id . '&' . 
+                'CUR=' . $currency . '&' . 
+                'RID=' . $tagrid . '&' . 
+                substr($category_products,0,-1) . 
+                '" style="display: none;">' . 
+                $this->_helper->clearTagrid();
     }
 }
 
