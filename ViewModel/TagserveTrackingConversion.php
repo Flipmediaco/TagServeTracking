@@ -73,11 +73,13 @@ class TagserveTrackingConversion extends \Magento\Framework\DataObject implement
                     $product = $this->_productFactory->create()->load($item->getProductId());
                     $tag_cat = $product->getData($this->_helper->tagCategoryAttributeName());
                     if (!$tag_cat) $tag_cat = 'CAT1';
+                    $qty = (int) $item->getQtyOrdered();
+                    $amount = number_format((float)$item->getRowTotalInclTax(), 2, '.', '');
                     // 
                     $category_products .=   'CAT=' . 
                                             $tag_cat . ',' . 
-                                            $item->getQtyOrdered() . ',' . 
-                                            $item->getRowTotalInclTax() . '&';
+                                            $qty . ',' . 
+                                            $amount . '&';
                 }
             }
         }
