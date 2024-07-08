@@ -107,7 +107,7 @@ class TagserveTrackingConversion extends \Magento\Framework\DataObject implement
                 'CUR=' . $currency . '&' . 
                 'RID=' . $tagrid . '&' . 
                 substr($category_products,0,-1) . 
-                '" style="display: none;">' . 
+                '" style="display: none;" class="no-lazy">' . 
                 $this->_helper->clearTagrid();
     }
 }
