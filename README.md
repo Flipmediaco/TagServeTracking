@@ -7,7 +7,7 @@ The module accepts input in the form of tagrid query string parameter, sets this
 ## Installation
 
 ```
-composer config repositories.flipmediaco git https://github.com/Flipmediaco/TagServeTracking
+composer config repositories.flipmediaco-tagservetracking git https://github.com/Flipmediaco/TagServeTracking
 composer require flipmediaco/tagservetracking
 ```
 https://devdocs.magento.com/cloud/howtos/install-components.html#install-an-extension
